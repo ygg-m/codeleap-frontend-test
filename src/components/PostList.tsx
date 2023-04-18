@@ -18,7 +18,7 @@ interface TreatedPostProps {
 
 const ShowTitle = ({ Edit, data }: { data: PostProps; Edit: boolean }) => {
   return (
-    <header className="px-4 bg-primary rounded-t-lg flex items-center justify-between text-base-100">
+    <header className="px-4 bg-primary rounded-t-lg flex items-center justify-between text-base-100 max-w-[638px]">
       <h1 className="text-lg font-bold py-4">{data.title}</h1>
       {Edit ? <ShowEditButtons data={data} /> : null}
     </header>
