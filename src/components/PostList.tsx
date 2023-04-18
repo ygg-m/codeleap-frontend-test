@@ -1,10 +1,13 @@
+// import { v4 as uuid } from "uuid";
+import { getSocialMediaTimestamp } from "../actions/getTimestamp";
 import { DeleteIcon, EditIcon } from "../assets/ui/index";
+import { Post as PostProps } from "../types/postsSlice";
 
-interface PostProps {
+interface TreatedPostProps {
   Title: string;
   Content: string;
   Author: string;
-  Date: string;
+  Date: Date;
   UserIsAuthor: boolean;
 }
 
@@ -29,8 +32,8 @@ const ShowAuthor = ({ Author }: { Author: string }) => {
   );
 };
 
-const ShowDate = ({ Date }: { Date: string }) => {
-  return <span className="font-bold">{Date}</span>;
+const ShowDate = ({ Date }: { Date: Date }) => {
+  return <span className="font-bold">{getSocialMediaTimestamp(Date)}</span>;
 };
 
 const ShowEditButtons = () => {
@@ -46,9 +49,15 @@ const ShowEditButtons = () => {
   );
 };
 
-const Post = ({ Title, Content, Author, Date, UserIsAuthor }: PostProps) => {
+const Post = ({
+  Title,
+  Content,
+  Author,
+  Date,
+  UserIsAuthor,
+}: TreatedPostProps) => {
   return (
-    <article className="rounded-lg bg-base-200">
+    <article className="rounded-lg bg-base-200 border border-primary">
       <ShowTitle Title={Title} Edit={UserIsAuthor} />
 
       <div className="p-4 grid gap-4">
@@ -62,27 +71,22 @@ const Post = ({ Title, Content, Author, Date, UserIsAuthor }: PostProps) => {
   );
 };
 
-export const PostList = () => {
+export const PostList = ({ posts }: { posts: PostProps[] }) => {
   return (
     <section className="px-4 grid gap-4">
-      <Post
-        Title={"My First Post at CodeLeap Network!"}
-        Content={
-          "Curabitur suscipit suscipit tellus. Phasellus consectetuer vestibulum elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas egestas arcu quis ligula mattis placerat. Duis vel nibh at velit scelerisque suscipit. Duis lobortis massa imperdiet quam. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Fusce a quam. Nullam vel sem. Nullam cursus lacinia erat."
-        }
-        Author={"Victor"}
-        Date={"25 minutes ago"}
-        UserIsAuthor={false}
-      />
-      <Post
-        Title={"Another Post!"}
-        Content={
-          "Curabitur suscipit suscipit tellus. Phasellus consectetuer vestibulum elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas egestas arcu quis ligula mattis placerat. Duis vel nibh at velit scelerisque suscipit. Duis lobortis massa imperdiet quam. Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc, eu sollicitudin urna dolor sagittis lacus. Fusce a quam. Nullam vel sem. Nullam cursus lacinia erat."
-        }
-        Author={"Ygg"}
-        Date={"30 minutes ago"}
-        UserIsAuthor={true}
-      />
+      {posts.map((post) => {
+        const { id, title, content, created_datetime, username } = post;
+        return (
+          <Post
+            key={id}
+            Title={title}
+            Content={content}
+            Author={username}
+            Date={new Date(Date.parse(created_datetime))}
+            UserIsAuthor={false}
+          />
+        );
+      })}
     </section>
   );
 };

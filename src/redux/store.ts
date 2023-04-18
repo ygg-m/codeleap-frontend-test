@@ -1,14 +1,17 @@
-import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { codeLeapApi } from "../redux/apiSlice";
+import userReducer from "./userSlice";
 
-export const store = configureStore({
-  reducer: {},
+const store = configureStore({
+  reducer: {
+    [codeLeapApi.reducerPath]: codeLeapApi.reducer,
+    user: userReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(codeLeapApi.middleware),
 });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+setupListeners(store.dispatch);
+
+export default store;

@@ -6,7 +6,7 @@ import App from "./App";
 import "./index.css";
 import { Login } from "./pages/Login";
 import { Main } from "./pages/Main";
-import { store } from "./redux/store";
+import store from "./redux/store";
 
 const router = createBrowserRouter([
   {

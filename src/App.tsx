@@ -3,7 +3,6 @@ import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 function App() {
   const isDefault = useLocation().pathname.split("/").reverse()[0] === "";
 
-  console.log(isDefault);
   return (
     <div className="bg-base-300">
       {isDefault ? (
