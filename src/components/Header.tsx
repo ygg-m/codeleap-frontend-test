@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { ExitIcon } from "../assets/ui";
 import { setUser } from "../redux/userSlice";
 
 export const Header = ({ user }: { user: string }) => {

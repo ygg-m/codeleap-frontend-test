@@ -1,4 +1,4 @@
-import { Provider, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { CreatePost } from "../components/EditPost";
 import { Header } from "../components/Header";
 import { PostList } from "../components/PostList";
