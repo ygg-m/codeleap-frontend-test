@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { setUser, UserState } from "../redux/userSlice";
+import { Main } from "./Main";
 
 export const Login = () => {
   const [value, setValue] = useState<string>("");
@@ -10,7 +11,7 @@ export const Login = () => {
 
   const dispatch = useDispatch();
 
-  if (user === "") return <Navigate to="../main" />;
+  if (user === "") return <Main />;
 
   return (
     <div className="bg-base-300">

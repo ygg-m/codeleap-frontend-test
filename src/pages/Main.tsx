@@ -6,6 +6,7 @@ import { Header } from "../components/Header";
 import { PostList } from "../components/PostList";
 import { useGetListQuery } from "../redux/apiSlice";
 import { UserState } from "../redux/userSlice";
+import { Login } from "./Login";
 
 export const Main = () => {
   const [offset, setOffset] = useState(0);
@@ -41,7 +42,7 @@ export const Main = () => {
     );
   }
 
-  if (user === "") return <Navigate to="../login" />;
+  if (user === "") return <Login />;
 
   if (data) {
     return (
