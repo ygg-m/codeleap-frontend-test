@@ -13,21 +13,14 @@ interface TreatedPostProps {
   Author: string;
   Date: Date;
   UserIsAuthor: boolean;
+  data: PostProps;
 }
 
-const ShowTitle = ({
-  id,
-  Title,
-  Edit,
-}: {
-  id: number;
-  Title: string;
-  Edit: boolean;
-}) => {
+const ShowTitle = ({ Edit, data }: { data: PostProps; Edit: boolean }) => {
   return (
     <header className="px-4 bg-primary rounded-t-lg flex items-center justify-between text-base-100">
-      <h1 className="text-lg font-bold py-4">{Title}</h1>
-      {Edit ? <ShowEditButtons id={id} /> : null}
+      <h1 className="text-lg font-bold py-4">{data.title}</h1>
+      {Edit ? <ShowEditButtons data={data} /> : null}
     </header>
   );
 };
@@ -48,7 +41,7 @@ const ShowDate = ({ Date }: { Date: Date }) => {
   return <span className="font-bold">{getSocialMediaTimestamp(Date)}</span>;
 };
 
-const DeleteButton = ({ id }: { id: number }) => (
+const DeleteButton = ({ data }: { data: PostProps }) => (
   <div>
     <label htmlFor="delete-modal" className="btn btn-outline btn-error">
       <DeleteIcon className="w-6 h-6" />
@@ -56,12 +49,12 @@ const DeleteButton = ({ id }: { id: number }) => (
 
     <input type="checkbox" id="delete-modal" className="modal-toggle" />
     <div className="modal text-base-content">
-      <Modal deletePost id={id} />
+      <Modal deletePost data={data} />
     </div>
   </div>
 );
 
-const EditButton = ({ id }: { id: number }) => (
+const EditButton = ({ data }: { data: PostProps }) => (
   <div>
     <label htmlFor="edit-modal" className="btn btn-outline btn-info">
       <EditIcon className="w-6 h-6" />
@@ -69,31 +62,30 @@ const EditButton = ({ id }: { id: number }) => (
 
     <input type="checkbox" id="edit-modal" className="modal-toggle" />
     <div className="modal text-base-content">
-      <Modal id={id} />
+      <Modal data={data} />
     </div>
   </div>
 );
 
-const ShowEditButtons = ({ id }: { id: number }) => {
+const ShowEditButtons = ({ data }: { data: PostProps }) => {
   return (
     <div className="flex gap-2 items-center py-2">
-      <DeleteButton id={id} />
-      <EditButton id={id} />
+      <DeleteButton data={data} />
+      <EditButton data={data} />
     </div>
   );
 };
 
 const Post = ({
-  ID,
-  Title,
   Content,
   Author,
   Date,
   UserIsAuthor,
+  data,
 }: TreatedPostProps) => {
   return (
     <article className="rounded-lg bg-base-200 border border-primary">
-      <ShowTitle id={ID} Title={Title} Edit={UserIsAuthor} />
+      <ShowTitle data={data} Edit={UserIsAuthor} />
 
       <div className="p-4 grid gap-4">
         <div className="flex justify-between text-neutral-content">
@@ -117,6 +109,7 @@ export const PostList = ({ posts }: { posts: PostProps[] }) => {
         return (
           <Post
             key={id}
+            data={post}
             ID={id}
             Title={title}
             Content={content}

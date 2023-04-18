@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { setUser } from "../redux/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, Navigate } from "react-router-dom";
+import { setUser, UserState } from "../redux/userSlice";
 
 export const Login = () => {
   const [value, setValue] = useState<string>("");
+  const user = useSelector((state: { user: UserState }) => state.user.user);
   const UserIsEmpty = value.length <= 0;
 
   const dispatch = useDispatch();
+
+  if (user === "") return <Navigate to="../main" />;
 
   return (
     <section className="w-screen h-screen grid place-items-center">

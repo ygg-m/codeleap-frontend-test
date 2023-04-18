@@ -1,4 +1,12 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  useAddPostMutation,
+  useGetListQuery,
+  useUpdatePostMutation,
+} from "../redux/apiSlice";
+import { UserState } from "../redux/userSlice";
+import { Post } from "../types/postsSlice";
 
 const CallToAction = ({ str }: { str: string }) => {
   return <h1 className="text-xl font-bold">{str}</h1>;
@@ -44,10 +52,21 @@ const Create = () => {
   );
 };
 
-export const EditPost = () => {
-  const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
+interface EditPostFormProps {
+  id: number;
+}
+
+export const EditPost = ({ data }: { data: Post }) => {
+  const [updatePost] = useUpdatePostMutation();
+
+  const [title, setTitle] = useState<string>(data.title);
+  const [content, setContent] = useState<string>(data.content);
   const isTitleOrContentEmpty = title.length > 0 && content.length > 0;
+
+  const handleSubmit = async (event: FormEvent) => {
+    const patch = { title: data.title, content: data.content };
+    await updatePost({ id: data.id, patch });
+  };
 
   return (
     <section className="modal-box p-4 w-full grid gap-2">
@@ -85,6 +104,7 @@ export const EditPost = () => {
           className={`btn btn-primary ${
             isTitleOrContentEmpty ? "" : "btn-disabled"
           }`}
+          onClick={(e) => handleSubmit(e)}
         >
           Confirm
         </label>
@@ -94,9 +114,23 @@ export const EditPost = () => {
 };
 
 export const CreatePost = () => {
+  const [createPost, { isLoading, isError }] = useAddPostMutation();
+
+  const user = useSelector((state: { user: UserState }) => state.user.user);
+
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const isTitleOrContentEmpty = title.length > 0 && content.length > 0;
+
+  const handleCreatePost = async () => {
+    const payload = {
+      username: user,
+      title: title,
+      content: content,
+    };
+
+    await createPost(payload).unwrap();
+  };
 
   return (
     <section className="px-4 w-full grid gap-2">
@@ -129,6 +163,7 @@ export const CreatePost = () => {
       <div className="grid place-items-end">
         <button
           className={`btn px-8 ${isTitleOrContentEmpty ? "" : "btn-disabled"}`}
+          onClick={handleCreatePost}
         >
           Create
         </button>

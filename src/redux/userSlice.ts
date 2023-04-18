@@ -1,11 +1,12 @@
-import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getCookie, setCookie } from "../actions/cookieUtils";
 
 export interface UserState {
   user: string;
 }
 
 const initialState: UserState = {
-  user: "",
+  user: getCookie("user") || "",
 };
 
 const userSlice = createSlice({
@@ -14,6 +15,7 @@ const userSlice = createSlice({
   reducers: {
     setUser(state, action: PayloadAction<string>) {
       state.user = action.payload;
+      setCookie("user", action.payload, 30);
     },
   },
 });
