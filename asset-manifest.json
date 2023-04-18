@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/codeleap-frontend-test/static/css/main.c1ade252.css",
-    "main.js": "/codeleap-frontend-test/static/js/main.004eac3c.js",
+    "main.js": "/codeleap-frontend-test/static/js/main.ecdf8f0a.js",
     "static/media/edit.svg": "/codeleap-frontend-test/static/media/edit.7252df1a01853560b358ba2b206c91e4.svg",
     "static/media/exit.svg": "/codeleap-frontend-test/static/media/exit.3d27349bb49fe6c1b1012188f9f9ac13.svg",
     "static/media/delete.svg": "/codeleap-frontend-test/static/media/delete.5766ce38294f361e137ba7feb1700535.svg",
     "index.html": "/codeleap-frontend-test/index.html",
     "main.c1ade252.css.map": "/codeleap-frontend-test/static/css/main.c1ade252.css.map",
-    "main.004eac3c.js.map": "/codeleap-frontend-test/static/js/main.004eac3c.js.map"
+    "main.ecdf8f0a.js.map": "/codeleap-frontend-test/static/js/main.ecdf8f0a.js.map"
   },
   "entrypoints": [
     "static/css/main.c1ade252.css",
-    "static/js/main.004eac3c.js"
+    "static/js/main.ecdf8f0a.js"
   ]
 }
